@@ -1,20 +1,20 @@
 ######
 # Author: Rick L.
-# Date  : 20191118
+# Date  : 20210217
 # Info  : latest and greatest bashrc file
 #
 ######
 
-source  ~/bin/tmux-completion/tmux
+#source  ~/bin/tmux-completion/tmux
 
 #export DOCKER_HOST=tcp://192.168.59.103:2376
 #export DOCKER_CERT_PATH=/Users/rickl/.boot2docker/certs/boot2docker-vm
 #export DOCKER_TLS_VERIFY=0
 export TERM=linux
-unset ${!DOCKER*}
-alias docker_ubuntu='docker run -it ubuntu /bin/bash'
-alias docker_bashlatest='docker run -it --rm bash:4.4'
-alias docker_nginx='docker run -d -p 80:80 --name webserver nginx'
+#unset ${!DOCKER*}
+#alias docker_ubuntu='docker run -it ubuntu /bin/bash'
+#alias docker_bashlatest='docker run -it --rm bash:4.4'
+#alias docker_nginx='docker run -d -p 80:80 --name webserver nginx'
 
 # inserted for Mac Catalina update.  By default shell is now /bin/zsh and if you want another shell you get warning messages.  This removes those warnings.
 export BASH_SILENCE_DEPRECATION_WARNING=1
@@ -59,6 +59,8 @@ MYSQL_PS1="(\u@\h) \\R:\\m:\\s [\d]> "
 SSLKEYLOGFILE=$HOME/Desktop/scratch/logfile.txt
 #LOCATE_PATH="~/tmp/locatedb"
 #DEPOT_TOOLS=$HOME/depot_tools/
+HISTSIZE=100000
+HISTFILESIZE=100000
 
 shopt -s cdspell
 shopt -s nocaseglob
@@ -95,6 +97,7 @@ case $HOST
                 rick-mac        )           ROLE="LAPTOP" ;;
                 rick-work-macbook.local )   ROLE="LAPTOP" ;;
                 rick-work-macbook       )   ROLE="LAPTOP" ;;
+                nlrl-laptop     )           ROLE="LAPTOP" ;;
                 *               )           ROLE="UNKNOWN" ;;
 esac
 

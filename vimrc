@@ -1,6 +1,6 @@
 """"""""""
 " Author: Rick L.
-" Date  : 20191118
+" Date  : 20210314
 " Info  : latest updates to the ever expanding/changing vimrc file
 "
 """"""""""
@@ -186,6 +186,7 @@ set tabstop=4              " Setup tabs for 4 spaces
 "set smarttab               " When on, a <Tab> in front of a line inserts blanks according to 'shiftwidth'.  'tabstop' or 'softtabstop' is 
                            " used in other places.  A <BS> will delete a 'shiftwidth' worth of space at the start of the line.
 set foldenable             " good for coding
+set foldlevelstart=20
 set foldmethod=marker      " folding based on markers
 "set shiftround             " Round indent to multiple of 'shiftwidth'.  Applies to > and < commands
 set expandtab              " Replaces tab with spaces
@@ -545,3 +546,16 @@ if executable('ag')
     " "        \ 'on_complete': ['ncm2#on_complete#omni',
     " 'csscomplete#CompleteCSS'],
     " "        \ })
+
+" For YAML files    
+" brew install yamllint
+" add this to: ~/.config/yamllint/config - sans comments
+"extends: relaxed
+"
+"rules:
+"  line-length: disable
+"
+"
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+let g:indentLine_char = '⦙'
+

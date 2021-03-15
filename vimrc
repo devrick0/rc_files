@@ -1,6 +1,6 @@
 """"""""""
 " Author: Rick L.
-" Date  : 20210314
+" Date  : 20210315
 " Info  : latest updates to the ever expanding/changing vimrc file
 "
 """"""""""
@@ -13,13 +13,8 @@ scriptencoding utf-8
 " Install missing plugins: PlugInstall
 call plug#begin('~/.vim/plugged')
 " Make sure you use single quotes
-
-" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
-
-" Any valid git URL is allowed
 Plug 'https://github.com/junegunn/vim-github-dashboard.git'
-
 Plug 'itchyny/lightline.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'mattn/emmet-vim'
@@ -34,22 +29,18 @@ Plug 'Badacadabra/vim-archery'                                                  
 Plug 'benmills/vimux'                                                                                 " Easily interact with tmux from vim.
 Plug 'brooth/far.vim'                                                                                 " Find and replace for vim
 Plug 'christoomey/vim-tmux-navigator'                                                                 " Navigate seamlessly between vim and tmux splits
-"Plug 'cquery-project/cquery',{ 'do': function('BuildCquery') }                                        " C/C++ language server
 Plug 'cyansprite/Extract'                                                                             " Extract; Draw forth what really matters
 Plug 'dracula/vim'                                                                                    " Dracula colorscheme for vim
 Plug 'easymotion/vim-easymotion'                                                                      " Vim motion on speed!.
 Plug 'editorconfig/editorconfig-vim'                                                                  " Follow .editorconfig settings in projects
-"Plug 'euclio/vim-markdown-composer', { 'do': function('BuildMarkdownComposer') }                      " Adds asynchronous Markdown preview
 Plug 'godlygeek/tabular'                                                                              " Align text easily.
 Plug 'joshdick/onedark.vim'                                                                           " A dark Vim/Neovim color scheme inspired by Atom's One Dark syntax theme.
-"Plug 'jpogran/puppet-vscode', { 'do': function('BuildPuppetLanguageServer') }                         " Puppet Language support for the Language Server Protocol
 Plug 'jsfaint/gen_tags.vim'                                                                           " Async plugin to ease the use of ctags/gtags.
 Plug 'junegunn/fzf.vim'                                                                               " fuzzy finder for vim.
 Plug 'junegunn/goyo.vim'                                                                              " Distraction-free writing in Vim.
 Plug 'junegunn/gv.vim'                                                                                " Git commit browser
 Plug 'lifepillar/vim-solarized8'                                                                      " Solarized true color colorscheme for vim.
 Plug 'majutsushi/tagbar'                                                                              " Class outline viewer for vim.
-"Plug 'marcdeop/php-language-server', { 'do': function('BuildPhpLanguageServer'), 'branch': 'rename' } " Language server protocol for php.
 Plug 'mileszs/ack.vim'                                                                                " Run your favorite search tool from vim.
 Plug 'morhetz/gruvbox'                                                                                " Gruvbox colorscheme for vim.
 Plug 'nathanaelkane/vim-indent-guides'                                                                " Visually diosplaying indent levels for vim.
@@ -66,8 +57,10 @@ Plug 'pearofducks/ansible-vim', { 'do': 'cd ./UltiSnips; ./generate.py' }
 Plug 'rakr/vim-one'                                                                                   " Adaptation of one-light and one-dark colorschemes for Vim
 Plug 'rodjek/vim-puppet'                                                                              " Make vim more puppet friendly!.
 Plug 'roxma/nvim-yarp'                                                                                " Required by ncm2
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-  \ | Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
+" Replacing NerdTree with Fern
+Plug 'lambdalisue/fern.vim'
+"Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+"  \ | Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
 Plug 'Shougo/echodoc.vim'                                                                             " Show function signature and inline doc.
 Plug 'Shougo/neco-vim'                                                                                " Autocompletion for vimscript
 Plug 'Shougo/neco-syntax'                                                                             " Syntax autocompletion
@@ -78,8 +71,6 @@ Plug 'sourcegraph/javascript-typescript-langserver', { 'do': 'npm install && npm
 Plug 'tpope/vim-fugitive'                                                                             " Git wrapper for vim
 Plug 'tpope/vim-repeat'                                                                               " Enable repeating supported plugin maps with `.`
 Plug 'tpope/vim-surround'                                                                             " Quoting/parenthesizing made simple
-"Plug 'vim-airline/vim-airline'                                                                        " Lean & mean status/tabline for vim.
-"Plug 'vim-airline/vim-airline-themes'                                                                 " Themes for vim-airline
 Plug 'vim-pandoc/vim-pandoc'                                                                          " Facilities to integrate Vim with the pandoc document converter
 Plug 'vim-pandoc/vim-pandoc-syntax'                                                                   " Standalone pandoc syntax module
 Plug 'vim-utils/vim-man'                                                                              " View man pages in vim. Grep for the man pages.
@@ -471,9 +462,9 @@ if executable('ag')
     """"""""""""""
     "  NERDTree  "
     "  """"""""""""""
-    let NERDTreeWinSize = 30
-    let g:NERDTreeQuitOnOpen = 0
-    let NERDTreeShowHidden = 1
+"    let NERDTreeWinSize = 30
+"    let g:NERDTreeQuitOnOpen = 0
+"    let NERDTreeShowHidden = 1
 
     """"""""""""
     "  Tagbar  "
@@ -559,3 +550,60 @@ if executable('ag')
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 let g:indentLine_char = '⦙'
 
+" .............................................................................
+" lambdalisue/fern.vim
+" .............................................................................
+
+" Disable netrw.
+let g:loaded_netrw  = 1
+let g:loaded_netrwPlugin = 1
+let g:loaded_netrwSettings = 1
+let g:loaded_netrwFileHandlers = 1
+
+augroup my-fern-hijack
+  autocmd!
+  autocmd BufEnter * ++nested call s:hijack_directory()
+augroup END
+
+function! s:hijack_directory() abort
+  let path = expand('%:p')
+  if !isdirectory(path)
+    return
+  endif
+  bwipeout %
+  execute printf('Fern %s', fnameescape(path))
+endfunction
+
+" Custom settings and mappings.
+let g:fern#disable_default_mappings = 1
+
+noremap <silent> <Leader>f :Fern . -drawer -reveal=% -toggle -width=35<CR><C-w>=
+
+function! FernInit() abort
+  nmap <buffer><expr>
+        \ <Plug>(fern-my-open-expand-collapse)
+        \ fern#smart#leaf(
+        \   "\<Plug>(fern-action-open:select)",
+        \   "\<Plug>(fern-action-expand)",
+        \   "\<Plug>(fern-action-collapse)",
+        \ )
+  nmap <buffer> <CR> <Plug>(fern-my-open-expand-collapse)
+  nmap <buffer> <2-LeftMouse> <Plug>(fern-my-open-expand-collapse)
+  nmap <buffer> n <Plug>(fern-action-new-path)
+  nmap <buffer> d <Plug>(fern-action-remove)
+  nmap <buffer> m <Plug>(fern-action-move)
+  nmap <buffer> M <Plug>(fern-action-rename)
+  nmap <buffer> h <Plug>(fern-action-hidden-toggle)
+  nmap <buffer> r <Plug>(fern-action-reload)
+  nmap <buffer> k <Plug>(fern-action-mark-toggle)
+  nmap <buffer> b <Plug>(fern-action-open:split)
+  nmap <buffer> v <Plug>(fern-action-open:vsplit)
+  nmap <buffer><nowait> < <Plug>(fern-action-leave)
+  nmap <buffer><nowait> > <Plug>(fern-action-enter)
+endfunction
+
+augroup FernGroup
+  autocmd!
+  autocmd FileType fern call FernInit()
+augroup END
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

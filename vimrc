@@ -1,6 +1,6 @@
 """"""""""
 " Author: Rick L.
-" Date  : 20210315
+" Date  : 20210331
 " Info  : latest updates to the ever expanding/changing vimrc file
 "
 """"""""""
@@ -13,23 +13,23 @@ scriptencoding utf-8
 " Install missing plugins: PlugInstall
 call plug#begin('~/.vim/plugged')
 " Make sure you use single quotes
-Plug 'junegunn/vim-easy-align'
-Plug 'https://github.com/junegunn/vim-github-dashboard.git'
+"Plug 'junegunn/vim-easy-align'
+"Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 Plug 'itchyny/lightline.vim'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'mattn/emmet-vim'
-Plug 'w0rp/ale'
+"Plug 'terryma/vim-multiple-cursors'
+"Plug 'mattn/emmet-vim'
+"Plug 'w0rp/ale'
 Plug 'farmergreg/vim-lastplace'
-Plug 'tomtom/tcomment_vim'
-Plug 'dhruvasagar/vim-table-mode'
-Plug 'andymass/vim-matchup'                                                                           " Extended matching with '%'
+"Plug 'tomtom/tcomment_vim'
+"Plug 'dhruvasagar/vim-table-mode'
+"Plug 'andymass/vim-matchup'                                                                           " Extended matching with '%'
 "Plug 'airblade/vim-gitgutter'                                                                         " Shows a git diff in the sign column. Stage and undo individual hunks.
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }                  " Language server protocol client.
-Plug 'Badacadabra/vim-archery'                                                                        " Vim colorscheme inspired by Arch Linux colors
+"Plug 'Badacadabra/vim-archery'                                                                        " Vim colorscheme inspired by Arch Linux colors
 Plug 'benmills/vimux'                                                                                 " Easily interact with tmux from vim.
 Plug 'brooth/far.vim'                                                                                 " Find and replace for vim
 Plug 'christoomey/vim-tmux-navigator'                                                                 " Navigate seamlessly between vim and tmux splits
-Plug 'cyansprite/Extract'                                                                             " Extract; Draw forth what really matters
+"Plug 'cyansprite/Extract'                                                                             " Extract; Draw forth what really matters
 Plug 'dracula/vim'                                                                                    " Dracula colorscheme for vim
 Plug 'easymotion/vim-easymotion'                                                                      " Vim motion on speed!.
 Plug 'editorconfig/editorconfig-vim'                                                                  " Follow .editorconfig settings in projects
@@ -38,25 +38,25 @@ Plug 'joshdick/onedark.vim'                                                     
 Plug 'jsfaint/gen_tags.vim'                                                                           " Async plugin to ease the use of ctags/gtags.
 Plug 'junegunn/fzf.vim'                                                                               " fuzzy finder for vim.
 Plug 'junegunn/goyo.vim'                                                                              " Distraction-free writing in Vim.
-Plug 'junegunn/gv.vim'                                                                                " Git commit browser
+"Plug 'junegunn/gv.vim'                                                                                " Git commit browser
 Plug 'lifepillar/vim-solarized8'                                                                      " Solarized true color colorscheme for vim.
 Plug 'majutsushi/tagbar'                                                                              " Class outline viewer for vim.
-Plug 'mileszs/ack.vim'                                                                                " Run your favorite search tool from vim.
+"Plug 'mileszs/ack.vim'                                                                                " Run your favorite search tool from vim.
 Plug 'morhetz/gruvbox'                                                                                " Gruvbox colorscheme for vim.
-Plug 'nathanaelkane/vim-indent-guides'                                                                " Visually diosplaying indent levels for vim.
-Plug 'ncm2/ncm2'                                                                                      " Slim, fast hackable completion framework, for neovim.
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-jedi'
-Plug 'ncm2/ncm2-markdown-subscope'
-Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-racer'
+"Plug 'nathanaelkane/vim-indent-guides'                                                                " Visually diosplaying indent levels for vim.
+"Plug 'ncm2/ncm2'                                                                                      " Slim, fast hackable completion framework, for neovim.
+"Plug 'ncm2/ncm2-bufword'
+"Plug 'ncm2/ncm2-jedi'
+"Plug 'ncm2/ncm2-markdown-subscope'
+"Plug 'ncm2/ncm2-path'
+"Plug 'ncm2/ncm2-racer'
 "Plug 'ncm2/ncm2-tern', { 'do': function('BuildNcm2Tern') }
-Plug 'ncm2/ncm2-tmux'
-Plug 'ncm2/ncm2-ultisnips'
-Plug 'pearofducks/ansible-vim', { 'do': 'cd ./UltiSnips; ./generate.py' }
-Plug 'rakr/vim-one'                                                                                   " Adaptation of one-light and one-dark colorschemes for Vim
-Plug 'rodjek/vim-puppet'                                                                              " Make vim more puppet friendly!.
-Plug 'roxma/nvim-yarp'                                                                                " Required by ncm2
+"Plug 'ncm2/ncm2-tmux'
+"Plug 'ncm2/ncm2-ultisnips'
+"Plug 'pearofducks/ansible-vim', { 'do': 'cd ./UltiSnips; ./generate.py' }
+"Plug 'rakr/vim-one'                                                                                   " Adaptation of one-light and one-dark colorschemes for Vim
+"Plug 'rodjek/vim-puppet'                                                                              " Make vim more puppet friendly!.
+"Plug 'roxma/nvim-yarp'                                                                                " Required by ncm2
 " Replacing NerdTree with Fern
 Plug 'lambdalisue/fern.vim'
 "Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
@@ -64,16 +64,16 @@ Plug 'lambdalisue/fern.vim'
 Plug 'Shougo/echodoc.vim'                                                                             " Show function signature and inline doc.
 Plug 'Shougo/neco-vim'                                                                                " Autocompletion for vimscript
 Plug 'Shougo/neco-syntax'                                                                             " Syntax autocompletion
-Plug 'sickill/vim-pasta'                                                                              " context-aware pasting
+"Plug 'sickill/vim-pasta'                                                                              " context-aware pasting
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'                                                   " Snippets for vim.
 Plug 'sjl/gundo.vim'                                                                                  " Visualize your vim undo tree.
-Plug 'sourcegraph/javascript-typescript-langserver', { 'do': 'npm install && npm run build' }         " Language server protocol for javascript.
-Plug 'tpope/vim-fugitive'                                                                             " Git wrapper for vim
+"Plug 'sourcegraph/javascript-typescript-langserver', { 'do': 'npm install && npm run build' }         " Language server protocol for javascript.
+"Plug 'tpope/vim-fugitive'                                                                             " Git wrapper for vim
 Plug 'tpope/vim-repeat'                                                                               " Enable repeating supported plugin maps with `.`
 Plug 'tpope/vim-surround'                                                                             " Quoting/parenthesizing made simple
-Plug 'vim-pandoc/vim-pandoc'                                                                          " Facilities to integrate Vim with the pandoc document converter
-Plug 'vim-pandoc/vim-pandoc-syntax'                                                                   " Standalone pandoc syntax module
-Plug 'vim-utils/vim-man'                                                                              " View man pages in vim. Grep for the man pages.
+"Plug 'vim-pandoc/vim-pandoc'                                                                          " Facilities to integrate Vim with the pandoc document converter
+"Plug 'vim-pandoc/vim-pandoc-syntax'                                                                   " Standalone pandoc syntax module
+"Plug 'vim-utils/vim-man'                                                                              " View man pages in vim. Grep for the man pages.
 
 
 " Initialize plugin system

@@ -1,20 +1,22 @@
 ######
 # Author: Rick L.
-# Date  : 20210217
+# Date  : 20210331
 # Info  : latest and greatest bashrc file
 #
 ######
 
 #source  ~/bin/tmux-completion/tmux
+#source <(kubectl completion bash)
 
 #export DOCKER_HOST=tcp://192.168.59.103:2376
 #export DOCKER_CERT_PATH=/Users/rickl/.boot2docker/certs/boot2docker-vm
 #export DOCKER_TLS_VERIFY=0
 export TERM=linux
 #unset ${!DOCKER*}
-#alias docker_ubuntu='docker run -it ubuntu /bin/bash'
-#alias docker_bashlatest='docker run -it --rm bash:4.4'
-#alias docker_nginx='docker run -d -p 80:80 --name webserver nginx'
+# if [ "$( docker container inspect -f '{{.State.Running}}' "ubuntu-01" )" == "true" ]; then echo "ubuntu is running, execute your command..." ; fi
+alias docker_ubuntu='docker run -it ubuntu /bin/bash'
+alias docker_bashlatest='docker run -it --rm bash:4.4'
+alias docker_nginx='docker run -d -p 80:80 --name webserver nginx'
 
 # inserted for Mac Catalina update.  By default shell is now /bin/zsh and if you want another shell you get warning messages.  This removes those warnings.
 export BASH_SILENCE_DEPRECATION_WARNING=1
@@ -32,7 +34,7 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 #YELLOWF=$(tput setaf 3)                   # yellow foreground
 LOG=$HOME/daily.log                       # record events (experimenting with this)
 stty erase '^H'
-JAVAVER="jdk1.8.0_201.jdk"
+JAVAVER="jdk-15.0.2.jdk"
 
 HOST=$(uname -n | awk -F. '{print $1}')
 HISTIGNORE="ls:exit"
@@ -48,7 +50,7 @@ JDK_HOME=/Library/Java/JavaVirtualMachines/${JAVAVER}/Contents/Home
 #TL=/usr/local/tomcat/logs/catalina.out
 EDITOR=vi
 VIMHOME=$HOME/.vim
-PATH=/usr/local/opt/findutils/libexec/gnubin:/usr/local/bin:/usr/local/sbin:$HOME/bin:/usr/bin:/sbin:/usr/sbin:$JAVA_HOME/bin:$PATH
+PATH=/usr/local/bin:/usr/local/sbin:$HOME/bin:/usr/bin:/sbin:/usr/sbin:$JAVA_HOME/bin:$HOME/Library/Python/2.7/bin:$PATH
 PROMPT_COMMAND="history -a"
 #LESS="--LONG-PROMPT --LINE-NUMBERS --ignore-case --QUIET --quit-if-one-screen --QUIT-AT-EOF"
 LESS="--LONG-PROMPT --ignore-case --QUIET -X"
@@ -97,7 +99,8 @@ case $HOST
                 rick-mac        )           ROLE="LAPTOP" ;;
                 rick-work-macbook.local )   ROLE="LAPTOP" ;;
                 rick-work-macbook       )   ROLE="LAPTOP" ;;
-                nlrl-laptop     )           ROLE="LAPTOP" ;;
+                nlrl-laptop     )	        ROLE="LAPTOP" ;;
+                nlrl-laptop.local       )   ROLE="LAPTOP" ;;
                 *               )           ROLE="UNKNOWN" ;;
 esac
 
@@ -169,7 +172,8 @@ display_clock() {
 
 # dumb terminal check put in place to deal with sftp connections failing 
 if [ "$TERM" != "dumb" ] ; then
-    PS1="\n/-={[\t]-[\d]-[jobs=\j]-[cmd \#]-[$(echo \$?)]}=-\n\-={\u@\h:${ROLE}\w} $PROMPT "
+    # broken with Big Sur update for Mac
+    PS1="\n/-={[\t]-[\d]-[jobs=\j]-[cmd \#]-[$(echo \$?)]}=-\n\-={\u@\h:${ROLE}\w} ${PROMPT} "
     #PS1="┌──\u@\h[\w]\n└─╼ "
     #PS1="> "
     display_clock
@@ -594,7 +598,8 @@ alias javac='/Library/Java/JavaVirtualMachines/${JAVAVER}/Contents/Home/bin/java
 alias brewup='brew update && brew upgrade && brew cleanup'
 alias screensaver="/System/Library/Frameworks/ScreenSaver.framework/Resources/ScreenSaverEngine.app/Contents/MacOS/ScreenSaverEngine &"
 alias cdf='cd "$(osascript -e "tell application \"Finder\" to if window 1 exists then if target of window 1 as string is not \":\" then get POSIX path of (target of window 1 as alias)")"'
-
+# change banner time from 5 seconds to 1 second
+# defaults write com.apple.notificationcenterui bannerTime -int 1
 #-----------------------------------------
 # specific for running outlook in crossover and check constantly to see if, when it crashed, there is still a process there or if one that started is truly running
 alias po='ps -ef | grep -i outlook'
@@ -633,3 +638,11 @@ alias enable_sshd="sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plis
 #alias disable_sshd="sudo launchctl unload -w /System/Library/LaunchDaemons/ssh.plist"
 #alias join_wifi_network="networksetup -setairportnetwork en0 WIFI_SSID WIFI_PASSWORD"
 alias macmenubar_restart="killall -KILL SystemUIServer"
+# kubernetes specific
+alias kubectl="kubecolor"
+alias k="kubectl"
+alias kpa="kubectl get pod --all-namespaces"
+alias ktp="kubectl top pod --all-namespaces"
+# autocomplete for kubecolor
+complete -o default -F __start_kubectl kubecolor
+complete -o default -F __start_kubectl k

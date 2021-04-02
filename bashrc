@@ -1,6 +1,6 @@
 ######
 # Author: Rick L.
-# Date  : 20210331
+# Date  : 20210401
 # Info  : latest and greatest bashrc file
 #
 ######
@@ -638,6 +638,8 @@ alias enable_sshd="sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plis
 #alias disable_sshd="sudo launchctl unload -w /System/Library/LaunchDaemons/ssh.plist"
 #alias join_wifi_network="networksetup -setairportnetwork en0 WIFI_SSID WIFI_PASSWORD"
 alias macmenubar_restart="killall -KILL SystemUIServer"
+# git clone https://github.com/vlsi/ksar.git
+alias ksar='java -jar ~/src/ksar/build/libs/ksar-5.2.4-SNAPSHOT-all.jar'
 # kubernetes specific
 alias kubectl="kubecolor"
 alias k="kubectl"

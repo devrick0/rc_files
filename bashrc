@@ -1,6 +1,6 @@
 ######
 # Author: Rick L.
-# Date  : 20210401
+# Date  : 20210508
 # Info  : latest and greatest bashrc file
 #
 ######
@@ -34,7 +34,7 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 #YELLOWF=$(tput setaf 3)                   # yellow foreground
 LOG=$HOME/daily.log                       # record events (experimenting with this)
 stty erase '^H'
-JAVAVER="jdk-15.0.2.jdk"
+JAVA_VERSION="jdk-15.0.2.jdk"
 
 HOST=$(uname -n | awk -F. '{print $1}')
 HISTIGNORE="ls:exit"
@@ -43,9 +43,9 @@ HISTCONTROL=ignoredups
 HISTFILE=~/.bhist
 HISTTIMEFORMAT="#%Y-%m-%d %H:%M:%S# "
 JAVA_VERSION=default
-JAVA_HOME=/Library/Java/JavaVirtualMachines/${JAVAVER}/Contents/Home
+JAVA_HOME=/Library/Java/JavaVirtualMachines/${JAVA_VERSION}/Contents/Home
 JAVA_PATH=${JAVA_HOME}
-JDK_HOME=/Library/Java/JavaVirtualMachines/${JAVAVER}/Contents/Home
+JDK_HOME=/Library/Java/JavaVirtualMachines/${JAVA_VERSION}/Contents/Home
 #CATALINA_HOME=/usr/local/tomcat
 #TL=/usr/local/tomcat/logs/catalina.out
 EDITOR=vi
@@ -524,52 +524,62 @@ alias ll='ls -ltr'
 alias lt='ls -lt | head -10'
 #alias ls='ls --color --time-style=full-iso'
 alias ..='cd ..'
+alias ...='cd ../../../'
+alias ....='cd ../../../../'
+alias .....='cd ../../../../'
+alias .4='cd ../../../../'
+alias .5='cd ../../../../..'
 alias gpg='gpg --no-secmem-warning'
 alias df='df -kh'
 alias tree='tree -s' 
-alias takeoos='mv /usr/jt/jt0/www/lb/is.htm /usr/jt/jt0/www/lb/oos.htm'
-alias putis='mv /usr/jt/jt0/www/lb/oos.htm /usr/jt/jt0/www/lb/is.htm'
-alias ldap='ldapsearch -x -b "dc=jt,dc=com" | grep uid:'
+alias userinfo='getent passwd|column  -t -s: -n'
+alias groupinfo='getent group|column  -t -s: -n'
 alias load='cat /proc/loadavg'
-alias whosinqueue='mysql -uroot content_services -e "select t_carrier.name, t_analysis.date_request_received from t_carrier, t_analysis, t_carrier_analysis where t_analysis.status_id = 8 and t_analysis.analysis_id = t_carrier_analysis.analysis_id and t_carrier.carrier_id = t_carrier_analysis.carrier_id order by t_analysis.date_request_received"'
-alias processing='mysql -uroot content_services -e "select t_carrier.name, t_analysis.date_request_received from t_carrier, t_analysis, t_carrier_analysis where t_analysis.status_id = 7 and t_analysis.analysis_id = t_carrier_analysis.analysis_id and t_carrier.carrier_id = t_carrier_analysis.carrier_id order by t_analysis.date_request_received"'
 alias vzip='unzip -lvM'
+alias diff='colordiff'
 alias jdiff='diff --side-by-side --ignore-case --ignore-blank-lines --ignore-all-spaces --suppress-common-lines'
-alias jmxterm='java -jar /cygdrive/c/cygwin/home/rickl/scripts/jmxterm-1.0-alpha-4-uber.jar'
 alias cvsst='cvs -qn update'
-# after adding in some .screenrc checks this is no necessary
+# after adding in some .screenrc checks this is no longer necessary
 #alias e='([ "$TERM" = screen ] && echo "YOU ARE IN A SCREEN SESSION - ALT-D to exit if you really want to.") || exit'
 #alias exit='([ "$TERM" = screen ] && echo "YOU ARE IN A SCREEN SESSION - ALT-D to exit if you really want to.") || exit'
 alias e='exit'
-alias ssh_hosts='while read SERVER ; do ssh -n $SERVER uname -n ; done < ~/hosts.ascii'
-#alias ssh='ssh -4 -C -c blowfish-cbc'
 alias vnew='vim `ls -t | head -1 `' 
 alias rm='rm -i'
-alias lastedit='cat <($(tail -1 $HISTFILE)) | vim - '
 alias rz='rz -y'
 alias sz='sz -y'
-alias lb='telnet 10.40.0.7'
-alias fw='ssh pix@fw01'
+alias lvim="vi -c "normal '0""
+alias lastedit='cat <($(tail -1 $HISTFILE)) | vim - '
 alias wget='wget --no-check-certificate'
+alias g='git'
+alias gr='git rm -rf'
+alias gs='git status'
+alias ga='g add'
+alias gc='git commit -m'
+alias gp='git push origin master'
+alias gl='git pull origin master'
+alias gtl='git log'
+alias gts='git status'
+alias .p='pushd .'
+alias p.='popd'
+alias bigfiles='find . -type f 2>/dev/null | xargs du -a 2>/dev/null | awk "{ if ( $1 > 5000) print $0 }"'
+alias verybigfiles='find . -type f 2>/dev/null | xargs du -a 2>/dev/null | awk "{ if ( $1 > 500000) print $0 }"'
+# grep all files in the current directory
+function _grin() { grep -rn --color $1 .;}
+alias grin=_grin
+# find file by name in current directory
+function _fn() { find . -name $1;}
+alias fn=_fn
 alias apachetail="tail -n 0 -f /var/log/httpd/*log | awk '{print \$9}'"
-alias mptail="tail -n 0 -f /var/log/httpd/*log | awk -F\| '{print \$7}'"
 # By default, grep will decode incoming text files in encoding set in environment variables. This will take CPU cycles. If you are searching plain ASCII match, like with programming language source code files, you can gain much speed by disabling the decoding. 
 alias grep='LC_CTYPE=POSIX grep --color=auto' 
-alias egrep='LC_CTYPE=POSIX egrep --color=auto' 
-#alias vpn_connect='nohup /cygdrive/c/Program\ Files\ \(x86\)/Cisco\ Systems/VPN\ Client/vpnclient.exe connect admin user rickl pwd PASSWORD_HERE &> /dev/null &'
-#alias vc='nohup /cygdrive/c/Program\ Files\ \(x86\)/Cisco\ Systems/VPN\ Client/vpnclient.exe connect admin user rickl pwd PASSWORD_HERE &> /dev/null &'
-#alias vpn_disconnect='/cygdrive/c/Program\ Files/Cisco\ Systems/VPN\ Client/vpnclient.exe disconnect'
-alias vpn_disconnect='/cygdrive/c/Program\ Files\ \(x86\)/Cisco\ Systems/VPN\ Client/vpnclient.exe disconnect'
-alias vd='/cygdrive/c/Program\ Files\ \(x86\)/Cisco\ Systems/VPN\ Client/vpnclient.exe disconnect'
-alias cisco_stop='/cygdrive/c/Program\ Files/Cisco\ Systems/VPN\ Client/vpnclient.exe disconnect ; sc stop cvpnd'
-#alias vpn_status='/cygdrive/c/Program\ Files/Cisco\ Systems/VPN\ Client/vpnclient.exe stat tunnel'
-alias vpn_status='/cygdrive/c/Program\ Files\ \(x86\)/Cisco\ Systems/VPN\ Client/vpnclient.exe stat tunnel'
-alias vs='/cygdrive/c/Program\ Files\ \(x86\)/Cisco\ Systems/VPN\ Client/vpnclient.exe stat tunnel'
+alias egrep='LC_CTYPE=POSIX egrep --color=auto'
+alias fgrep='LC_CTYPE=POSIX fgrep --color=auto'
+alias mount='mount | column -t'
+alias lsmount='mount | sort | column -t | ccze -A'
+alias nocomment='grep -Ev '''^(#|$)''''
+alias hg='history | grep '
 alias cisco_status='sc query cvpnd'
-alias teamcity='ssh -p 7022 -f -N -L 8111:teamcity.jt.com:8111 crawl4.springright.com'
-alias perforce='ssh -T -C -p 7022 -i /cygdrive/c/Users/rickl/Documents/ZOC\ Files/SSH/perforce_id_dsa -f -N -L 1666:localhost:1666 perforce.domain.com'
 alias sdf_proxy='ssh -D 9999 -i ~/Dropbox/ssh/id_rsa -q -f -C -N devrick0@otaku.freeshell.org -p 443'
-#alias vim='VIM=`cygpath -d "$VIM"` HOME=`cygpath -d "$HOME"` "`cygpath -u "$VIM"`/vim72/vim.exe"'
 # debian/ubuntu specific aliases
 alias ap='sudo aptitude'
 alias apu='sudo aptitude update'
@@ -592,9 +602,9 @@ alias upgrade='sudo apt-get upgrade'
 alias yinfo='sudo apt-cache show'
 
 # mac specific
-alias jconsole='/Library/Java/JavaVirtualMachines/${JAVAVER}/Contents/Home/bin/jconsole'
-alias java='/Library/Java/JavaVirtualMachines/${JAVAVER}/Contents/Home/bin/java'
-alias javac='/Library/Java/JavaVirtualMachines/${JAVAVER}/Contents/Home/bin/java'
+alias jconsole='/Library/Java/JavaVirtualMachines/${JAVA_VERSION}/Contents/Home/bin/jconsole'
+alias java='/Library/Java/JavaVirtualMachines/${JAVA_VERSION}/Contents/Home/bin/java'
+alias javac='/Library/Java/JavaVirtualMachines/${JAVA_VERSION}/Contents/Home/bin/java'
 alias brewup='brew update && brew upgrade && brew cleanup'
 alias screensaver="/System/Library/Frameworks/ScreenSaver.framework/Resources/ScreenSaverEngine.app/Contents/MacOS/ScreenSaverEngine &"
 alias cdf='cd "$(osascript -e "tell application \"Finder\" to if window 1 exists then if target of window 1 as string is not \":\" then get POSIX path of (target of window 1 as alias)")"'
@@ -645,6 +655,7 @@ alias kubectl="kubecolor"
 alias k="kubectl"
 alias kpa="kubectl get pod --all-namespaces"
 alias ktp="kubectl top pod --all-namespaces"
+alias hue_info="curl https://discovery.meethue.com"
 # autocomplete for kubecolor
 complete -o default -F __start_kubectl kubecolor
 complete -o default -F __start_kubectl k

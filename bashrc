@@ -1,6 +1,6 @@
 ######
 # Author: Rick L.
-# Date  : 20210508
+# Date  : 20210509
 # Info  : latest and greatest bashrc file
 #
 ######
@@ -532,8 +532,8 @@ alias .5='cd ../../../../..'
 alias gpg='gpg --no-secmem-warning'
 alias df='df -kh'
 alias tree='tree -s' 
-alias userinfo='getent passwd|column  -t -s: -n'
-alias groupinfo='getent group|column  -t -s: -n'
+alias userinfo='getent passwd | column  -t -s: -n'
+alias groupinfo='getent group | column  -t -s: -n'
 alias load='cat /proc/loadavg'
 alias vzip='unzip -lvM'
 alias diff='colordiff'
@@ -547,7 +547,6 @@ alias vnew='vim `ls -t | head -1 `'
 alias rm='rm -i'
 alias rz='rz -y'
 alias sz='sz -y'
-alias lvim="vi -c "normal '0""
 alias lastedit='cat <($(tail -1 $HISTFILE)) | vim - '
 alias wget='wget --no-check-certificate -c'
 alias g='git'
@@ -563,20 +562,12 @@ alias .p='pushd .'
 alias p.='popd'
 alias bigfiles='find . -type f 2>/dev/null | xargs du -a 2>/dev/null | awk "{ if ( $1 > 5000) print $0 }"'
 alias verybigfiles='find . -type f 2>/dev/null | xargs du -a 2>/dev/null | awk "{ if ( $1 > 500000) print $0 }"'
-# grep all files in the current directory
-function _grin() { grep -rn --color $1 .;}
-alias grin=_grin
-# find file by name in current directory
-function _fn() { find . -name $1;}
-alias fn=_fn
-alias apachetail="tail -n 0 -f /var/log/httpd/*log | awk '{print \$9}'"
 # By default, grep will decode incoming text files in encoding set in environment variables. This will take CPU cycles. If you are searching plain ASCII match, like with programming language source code files, you can gain much speed by disabling the decoding. 
 alias grep='LC_CTYPE=POSIX grep --color=auto' 
 alias egrep='LC_CTYPE=POSIX egrep --color=auto'
 alias fgrep='LC_CTYPE=POSIX fgrep --color=auto'
 alias mount='mount | column -t'
 alias lsmount='mount | sort | column -t | ccze -A'
-alias nocomment='grep -Ev '''^(#|$)''''
 alias hg='history | grep '
 alias cisco_status='sc query cvpnd'
 alias sdf_proxy='ssh -D 9999 -i ~/Dropbox/ssh/id_rsa -q -f -C -N devrick0@otaku.freeshell.org -p 443'
@@ -601,25 +592,11 @@ alias update='sudo apt-get update'
 alias upgrade='sudo apt-get upgrade'
 alias yinfo='sudo apt-cache show'
 
-# mac specific
-alias jconsole='/Library/Java/JavaVirtualMachines/${JAVA_VERSION}/Contents/Home/bin/jconsole'
-alias java='/Library/Java/JavaVirtualMachines/${JAVA_VERSION}/Contents/Home/bin/java'
-alias javac='/Library/Java/JavaVirtualMachines/${JAVA_VERSION}/Contents/Home/bin/java'
-alias brewup='brew update && brew upgrade && brew cleanup'
-alias screensaver="/System/Library/Frameworks/ScreenSaver.framework/Resources/ScreenSaverEngine.app/Contents/MacOS/ScreenSaverEngine &"
-alias cdf='cd "$(osascript -e "tell application \"Finder\" to if window 1 exists then if target of window 1 as string is not \":\" then get POSIX path of (target of window 1 as alias)")"'
-# change banner time from 5 seconds to 1 second
-# defaults write com.apple.notificationcenterui bannerTime -int 1
-#-----------------------------------------
-# specific for running outlook in crossover and check constantly to see if, when it crashed, there is still a process there or if one that started is truly running
-alias po='ps -ef | grep -i outlook'
-alias pk='pkill OUTLOOK.EXE'
-#alias tld='tail -f log\*`date %Y%m%d`*'
-alias tld='tail -f log*`date +%Y%m%d`*'
-
 #------------------------------------------
 # Mac aliases
 # sudo ln -s /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport /usr/local/bin/airport
+# change banner time from 5 seconds to 1 second
+# defaults write com.apple.notificationcenterui bannerTime -int 1
 alias current_ssid="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | awk '/ SSID/ {print substr($0, index($0, $2))}'"
 alias airport="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport"
 alias list_ssids="airport -s"
@@ -632,6 +609,12 @@ alias wifi_on="networksetup -setairportpower airport on"
 alias wifi_off="networksetup -setairportpower airport off"
 alias lock="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
 alias lock_10="defaults write com.apple.screensaver askForPasswordDelay -int 10"
+alias jconsole='/Library/Java/JavaVirtualMachines/${JAVA_VERSION}/Contents/Home/bin/jconsole'
+alias java='/Library/Java/JavaVirtualMachines/${JAVA_VERSION}/Contents/Home/bin/java'
+alias javac='/Library/Java/JavaVirtualMachines/${JAVA_VERSION}/Contents/Home/bin/java'
+alias brewup='brew update && brew upgrade && brew cleanup'
+alias screensaver="/System/Library/Frameworks/ScreenSaver.framework/Resources/ScreenSaverEngine.app/Contents/MacOS/ScreenSaverEngine &"
+alias cdf='cd "$(osascript -e "tell application \"Finder\" to if window 1 exists then if target of window 1 as string is not \":\" then get POSIX path of (target of window 1 as alias)")"'
 #alias updatedb="sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist"
 #alias updatedb="sudo /usr/libexec/locate.updatedb"
 # replaced the two aliases above with this:

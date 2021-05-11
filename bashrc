@@ -1,6 +1,6 @@
 ######
 # Author: Rick L.
-# Date  : 20210509
+# Date  : 20210511
 # Info  : latest and greatest bashrc file
 #
 ######
@@ -216,6 +216,35 @@ runme() {
         [ $# -lt 1 ] && echo 'Usage: runme "commands_to_run"' && return 1
         [ ! -f ~/hosts.ascii ] && echo "Error: Check to make sure the hosts.ascii file is in your home directory." && return 1
         for SERVER in $(cat ~/hosts.ascii) ; do ssh -t $SERVER "$1" ; done 2>/dev/null
+}
+
+ts-dns() { 
+    tshark -Y "dns.flags.response == 1" -Tfields \
+    -e frame.time_delta \
+    -e dns.qry.name \
+    -e dns.a \
+    -Eseparator=,
+}
+
+ts-http() {
+    tshark -Y "http.request or http.response" -Tfields \
+    -e ip.dst \
+    -e http.request.full_uri \
+    -e http.request.method \
+    -e http.response.code \
+    -e http.response.phrase \
+    -Eseparator=/s
+}
+
+ts-ssl() {
+    tshark -Y "ssl.handshake.certificate" -Tfields \
+    -e ip.src \
+    -e x509sat.uTF8String \
+    -e x509sat.printableString \
+    -e x509sat.universalString \
+    -e x509sat.IA5String \
+    -e x509sat.teletexString \
+    -Eseparator=/s -Equote=d
 }
 
 curl_debug() {

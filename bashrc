@@ -174,7 +174,8 @@ display_clock() {
 if [ "$TERM" != "dumb" ] ; then
     # broken with Big Sur update for Mac
     #PS1="\n/-={[\t]-[\d]-[jobs=\j]-[cmd \#]-[$(echo \$?)]}=-\n\-={\u@\h:${ROLE}\w} ${PROMPT} "
-    PS1='\n(\D{%Y.%m.%d}-\T) \[\e]0;\u@\h: \w\a\]\[\e[01;31m\]\u@\[\e[01;36m\]\h\[\e[00m\]:\[\e[01;37m\]\w \$\[\e[00m\] '
+    #PS1='\n(\D{%Y.%m.%d}-\T) \[\e]0;\u@\h: \w\a\]\[\e[01;31m\]\u@\[\e[01;36m\]\h\[\e[00m\]:\[\e[01;37m\]\w \$\[\e[00m\] '
+    PS1='\n\[\e[33m\]---[\w]---\n(\D{%Y.%m.%d}-\T) \[\e]0;\u@\h: \w\a\]\[\e[01;31m\]\u@\[\e[01;36m\]\h\[\e[00m\]:\[\e[01;37m\] \$\[\e[00m\] '
     #PS1="┌──\u@\h[\w]\n└─╼ "
     #PS1="> "
     display_clock

@@ -1,10 +1,11 @@
 """"""""""
 " Author: Rick L.
-" Date  : 20210331
+" Date  : 20210517
 " Info  : latest updates to the ever expanding/changing vimrc file
 "
 """"""""""
 scriptencoding utf-8
+set undodir=~/.vim/undodir
 
 " Specify a directory for plugins
 " - For Neovim: ~/.local/share/nvim/plugged

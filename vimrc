@@ -19,6 +19,8 @@ set relativenumber
 augroup toggle_relative_number
     autocmd InsertEnter * :setlocal norelativenumber
     autocmd InsertLeave * :setlocal relativenumber
+" execute :w!! quickly to save a file that you did not open with proper permissions
+cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 "colorscheme desert
 "set nobackup " disable backup files
 set laststatus=2 "show status line

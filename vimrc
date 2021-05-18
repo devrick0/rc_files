@@ -1,11 +1,30 @@
 """"""""""
 " Author: Rick L.
-" Date  : 20210517
+" Date  : 20210518
 " Info  : latest updates to the ever expanding/changing vimrc file
 "
 """"""""""
 scriptencoding utf-8
-set undodir=~/.vim/undodir
+set undodir=~/.vim/undodir/
+set backupdir=~/.vim/backup/
+set directory=~/.vim/swp/
+set nocompatible                    " use vim settings, rather than vi settings
+set softtabstop=2                   " indent by 2 spaces when hitting tab
+set shiftwidth=4                    " indent by 4 spaces when auto-indenting
+set tabstop=4                       " show existing tab with 4 spaces width
+filetype indent on                  " enable indenting for files
+set autoindent                      " enable auto indenting
+set number                          " enable line numbers
+set relativenumber
+augroup toggle_relative_number
+    autocmd InsertEnter * :setlocal norelativenumber
+    autocmd InsertLeave * :setlocal relativenumber
+"colorscheme desert
+"set nobackup " disable backup files
+set laststatus=2 "show status line
+set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
+"set statusline=%F%m%r%h%w\ \ \ [FORMAT=%{&ff}]\ \ \ [TYPE=%Y]\ \ \ [ASCII=\%03.3b]\ \ \ [POS=%04l,%04v][%p%%]\ \ \ [LEN=%L]
+set rulerformat=%22(%M%n\ %=%l,%c%V\ %P%)
 
 " Specify a directory for plugins
 " - For Neovim: ~/.local/share/nvim/plugged
@@ -19,7 +38,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'itchyny/lightline.vim'
 "Plug 'terryma/vim-multiple-cursors'
 "Plug 'mattn/emmet-vim'
-"Plug 'w0rp/ale'
+Plug 'w0rp/ale'
 Plug 'farmergreg/vim-lastplace'
 "Plug 'tomtom/tcomment_vim'
 "Plug 'dhruvasagar/vim-table-mode'
@@ -153,7 +172,6 @@ endif
 
 iabbrev timeloop echo "timing method X"<cr>time for ((i=1 ; i < 500 ; i++ )) ; do<cr>    command to run &> /dev/null<cr>done
 
-syntax on
 syntax enable
 let loaded_matchparen = 1
 filetype on                " enable filetype detection
@@ -167,15 +185,11 @@ set t_ti= t_te=            " don't clear the screen when exiting a vi session
 set noerrorbells           " get rid of any bell noises
 set visualbell t_vb=       " stop the visual flash of the screen when a beep would happen
 set nobackup
-set backspace=2            " make backspace work normal (non-vi style), allows backspace over everything in insert mode
+set backspace=indent,eol,start  " allow backspacing over indention, line breaks and insertion start
 set whichwrap+=<,>,h,l     " backspace and cursor keys wrap to next/prev lines
 set ruler                  " display the ruler
 set ignorecase             " obvious
-set nocompatible           " better for vim features
-"set autoindent             " always set autoindenting on, good for coding
-set tabstop=4              " Setup tabs for 4 spaces
-"set softtabstop=4          " Number of spaces that a <Tab> counts for while performing editing operations, like inserting a <Tab> or using <BS>.
-"set smarttab               " When on, a <Tab> in front of a line inserts blanks according to 'shiftwidth'.  'tabstop' or 'softtabstop' is 
+"set smarttab               " when on, a <tab> in front of a line inserts blanks according to 'shiftwidth'.  'tabstop' or 'softtabstop' is 
                            " used in other places.  A <BS> will delete a 'shiftwidth' worth of space at the start of the line.
 set foldenable             " good for coding
 set foldlevelstart=20
@@ -187,18 +201,13 @@ set showcmd                " show incomplete commands
 set showmode               " display what mode you are in
 set showmatch              " show matching brackets
 set hlsearch               " obvious - disabled from within a vi session by doing a simple :nohl
-set history=50             " by default, vim only remembers the last 20 commands and search patterns entered.
+set history=1000           " by default, vim only remembers the last 20 commands and search patterns entered.
 set wildmenu               " by default, pressing <TAB> in command mode will choose the first possible completion with no 
                            " indication of how many others there might be.
 set wildmode=list:longest  " to have the completion behave similarly to a shell, i.e. complete only up to the point of ambiguity 
                            "(while still showing you what your options are), also add this line.
 set guioptions+=c          " use console dialogs instead of popup dialogs for simple choices
-set backspace=2            " by default this option is empty, not allowing you to backspace over characters that were not 
-                           " entered during the current insert mode session, the automatically inserted indentation, or across line breaks.
-set laststatus=2           " always show the status line
 set viminfo='1000,f1,<500,s10,h,%                       " remember some stuff after quiting vim, marks, registers, searches, buffer list
-set rulerformat=%22(%M%n\ %=%l,%c%V\ %P%)
-set statusline=%F%m%r%h%w\ \ \ [FORMAT=%{&ff}]\ \ \ [TYPE=%Y]\ \ \ [ASCII=\%03.3b]\ \ \ [POS=%04l,%04v][%p%%]\ \ \ [LEN=%L]
 set dictionary+=$VIMDIR/wordlists/dict_words
 
 nmap <silent> <leader>s :set nolist!<CR>        " by default whitespace will be hidden, but now it can be toggled with ,s. 
@@ -248,14 +257,14 @@ nmap <silent> <leader>s :set nolist!<CR>        " by default whitespace will be 
 "    "colorscheme darkblue
 "endif
 
-if has("gui_running")
-  syntax on
-  set hlsearch
-  colorscheme desert
-  set bs=2
-  set ai
-  set ruler
-endif
+"if has("gui_running")
+"  syntax on
+"  set hlsearch
+"  colorscheme desert
+"  set bs=2
+"  set ai
+"  set ruler
+"endif
 
 
 """""""""""""""""""""""""""""""""

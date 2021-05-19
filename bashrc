@@ -1,6 +1,6 @@
 ######
 # Author: Rick L.
-# Date  : 20210516
+# Date  : 20210519
 # Info  : latest and greatest bashrc file
 #
 ######
@@ -557,7 +557,8 @@ alias lt='ls -lt | head -10'
 alias ..='cd ..'
 alias ...='cd ../../../'
 alias ....='cd ../../../../'
-alias .....='cd ../../../../'
+alias .....='cd ../../../../../'
+alias .3='cd ../../../'
 alias .4='cd ../../../../'
 alias .5='cd ../../../../..'
 alias gpg='gpg --no-secmem-warning'

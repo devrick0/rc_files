@@ -1,6 +1,6 @@
 """"""""""
 " Author: Rick L.
-" Date  : 20210518
+" Date  : 20210519
 " Info  : latest updates to the ever expanding/changing vimrc file
 "
 """"""""""
@@ -15,7 +15,8 @@ set tabstop=4                       " show existing tab with 4 spaces width
 filetype indent on                  " enable indenting for files
 set autoindent                      " enable auto indenting
 set number                          " enable line numbers
-set relativenumber
+set relativenumber                  " also enable with 'set rnu'
+" disable via :set nonu and :set nornu
 augroup toggle_relative_number
     autocmd InsertEnter * :setlocal norelativenumber
     autocmd InsertLeave * :setlocal relativenumber

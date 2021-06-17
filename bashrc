@@ -1,6 +1,6 @@
 ######
 # Author: Rick L.
-# Date  : 20210528
+# Date  : 20210617
 # Info  : latest and greatest bashrc file
 #
 ######
@@ -50,7 +50,7 @@ JDK_HOME=/Library/Java/JavaVirtualMachines/${JAVA_VERSION}/Contents/Home
 #TL=/usr/local/tomcat/logs/catalina.out
 EDITOR=vi
 VIMHOME=$HOME/.vim
-PATH=/usr/local/bin:/usr/local/sbin:$HOME/bin:/usr/bin:/sbin:/usr/sbin:$JAVA_HOME/bin:$HOME/Library/Python/2.7/bin:$PATH
+PATH=/usr/local/bin:/usr/local/sbin:$HOME/bin:/usr/bin:/sbin:/usr/sbin:$JAVA_HOME/bin:$GOPATH/bin:$PATH
 PROMPT_COMMAND="history -a"
 #LESS="--LONG-PROMPT --LINE-NUMBERS --ignore-case --QUIET --quit-if-one-screen --QUIT-AT-EOF"
 LESS="--LONG-PROMPT --ignore-case --QUIET -X"
@@ -674,3 +674,10 @@ alias hue_info="curl https://discovery.meethue.com"
 # autocomplete for kubecolor
 complete -o default -F __start_kubectl kubecolor
 complete -o default -F __start_kubectl k
+
+#-----------------------------------------
+# sonos specific aliases - required an 'npm start' with https://github.com/jishi/node-sonos-http-api 
+alias office-p='curl http://localhost:5005/Office/playpause'
+# this image pull is a test I am doing to incorporate sonos into streamdeck (no plugin exists ATM)
+alias office-p-img='curl http://localhost:5005/Office/state
+

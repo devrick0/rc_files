@@ -1,6 +1,6 @@
 ######
 # Author: Rick L.
-# Date  : 20210617
+# Date  : 20210621
 # Info  : latest and greatest bashrc file
 #
 ######
@@ -38,10 +38,12 @@ JAVA_VERSION="jdk-15.0.2.jdk"
 GOPATH=/Users/rick/go
 HOST=$(uname -n | awk -F. '{print $1}')
 HISTIGNORE="ls:exit"
-HISTSIZE=50000
 HISTCONTROL=ignoredups       
 HISTFILE=~/.bhist
 HISTTIMEFORMAT="#%Y-%m-%d %H:%M:%S# "
+# unlimited history
+HISTSIZE=-1   
+HISTFILESIZE=-1  
 JAVA_VERSION=default
 JAVA_HOME=/Library/Java/JavaVirtualMachines/${JAVA_VERSION}/Contents/Home
 JAVA_PATH=${JAVA_HOME}
@@ -679,5 +681,4 @@ complete -o default -F __start_kubectl k
 # sonos specific aliases - required an 'npm start' with https://github.com/jishi/node-sonos-http-api 
 alias office-p='curl http://localhost:5005/Office/playpause'
 # this image pull is a test I am doing to incorporate sonos into streamdeck (no plugin exists ATM)
-alias office-p-img='curl http://localhost:5005/Office/state
-
+alias office-p-img='curl http://localhost:5005/Office/state'

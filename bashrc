@@ -1,6 +1,6 @@
 ######
 # Author: Rick L.
-# Date  : 20210625
+# Date  : 20210713
 # Info  : latest and greatest bashrc file
 #
 ######
@@ -138,17 +138,17 @@ ps1_set(){
     PS1="\D{%H:%M:%S}${separator}${prompt_char} "
 }
 function countdown(){
-    date1=$((`date +%s` + $1)); 
+    date1=$((`gdate +%s` + $1)); 
     while [ "$date1" -ge `date +%s` ]; do 
-        echo -ne "$(date -u --date @$(($date1 - `date +%s`)) +%H:%M:%S)\r";
+        echo -ne "$(gdate -u --date @$(($date1 - `gdate +%s`)) +%H:%M:%S)\r";
         sleep 0.1
     done
 }
 
 function stopwatch(){
-    date1=`date +%s`; 
+    date1=`gdate +%s`; 
     while true; do 
-        echo -ne "$(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r"; 
+        echo -ne "$(gdate -u --date @$((`gdate +%s` - $date1)) +%H:%M:%S)\r"; 
         sleep 0.1
     done
 }
@@ -205,6 +205,7 @@ export PATH JAVA_VERSION JAVA_HOME JAVA_PATH JDK_HOME CATALINA_HOME ANT_HOME HIS
 
 vi() {
     [ ! -d ~/.bak ] && mkdir ~/.bak
+    [ ! -d ~/.vim/backup ] && mkdir ~/.vim/backup   # used to set up .vimrc's backup methodology as well as having this
 
     for FILE in $* ; do
         if [ -f $FILE ] ; then

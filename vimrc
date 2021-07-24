@@ -1,6 +1,6 @@
 """"""""""
 " Author: Rick L.
-" Date  : 20210519
+" Date  : 20210713
 " Info  : latest updates to the ever expanding/changing vimrc file
 "
 """"""""""
@@ -12,8 +12,8 @@ set nocompatible                    " use vim settings, rather than vi settings
 set softtabstop=2                   " indent by 2 spaces when hitting tab
 set shiftwidth=4                    " indent by 4 spaces when auto-indenting
 set tabstop=4                       " show existing tab with 4 spaces width
-filetype indent on                  " enable indenting for files
-set autoindent                      " enable auto indenting
+"filetype indent on                  " enable indenting for files
+"set autoindent                      " enable auto indenting
 set number                          " enable line numbers
 set relativenumber                  " also enable with 'set rnu'
 " disable via :set nonu and :set nornu
@@ -98,12 +98,10 @@ Plug 'tpope/vim-surround'                                                       
 "Plug 'vim-pandoc/vim-pandoc-syntax'                                                                   " Standalone pandoc syntax module
 "Plug 'vim-utils/vim-man'                                                                              " View man pages in vim. Grep for the man pages.
 
-
 " Initialize plugin system
 call plug#end()
 
 let g:table_mode_corner="|"
-
 let mapleader = ','
 
 let g:lightline = {

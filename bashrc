@@ -1,6 +1,6 @@
 ######
 # Author: Rick L.
-# Date  : 20210713
+# Date  : 20210724
 # Info  : latest and greatest bashrc file
 #
 ######
@@ -52,7 +52,7 @@ JDK_HOME=/Library/Java/JavaVirtualMachines/${JAVA_VERSION}/Contents/Home
 #TL=/usr/local/tomcat/logs/catalina.out
 EDITOR=vi
 VIMHOME=$HOME/.vim
-PATH=/usr/local/bin:/usr/local/sbin:$HOME/bin:/usr/bin:/sbin:/usr/sbin:$JAVA_HOME/bin:$GOPATH/bin:$PATH
+PATH=/usr/local/bin:/usr/local/sbin:$HOME/bin:/usr/bin:/sbin:/usr/sbin:$JAVA_HOME/bin:$GOPATH/bin:$PATH:/Users/rick/Library/Python/2.7/bin
 PROMPT_COMMAND="history -a"
 #LESS="--LONG-PROMPT --LINE-NUMBERS --ignore-case --QUIET --quit-if-one-screen --QUIT-AT-EOF"
 LESS="--LONG-PROMPT --ignore-case --QUIET -X"

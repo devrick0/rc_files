@@ -390,7 +390,7 @@ alias gobusts3="gobuster s3 -w ~/src/SecLists/Dicsovery/DNS/subdomains-top5000.t
 #-----------------------------------------
 # Jira
 #-----------------------------------------
-alias jcsi="jira PROJECT list --history"
+alias jirahist="jira PROJECT list --history"
 
 zstyle ":completion:*" auto-description "specify %d"
 zstyle ":completion:*" cache-path "${HOME}/.zsh_cache"

@@ -1,3 +1,10 @@
+######
+# Author: Rick L.
+# Date  : 20240820
+# Info  : latest and greatest zshrc file
+#
+######
+
 export LANG=en_US.UTF-8
 
 #bindkey '^I' complete-word            # tab             | complete

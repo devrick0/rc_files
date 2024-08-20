@@ -6,8 +6,11 @@ bindkey '^I^I'  autosuggest-accept
 bindkey '^r'    history-search-backward
 bindkey '^n'    history-search-forward
 
-if [ -f "/Users/USERNAME/.config/fabric/fabric-bootstrap.inc" ]; then . "/Users/USERNAME/.config/fabric/fabric-bootstrap.inc"; fi
-export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:/Users/USERNAME/.local/bin:/Users/USERNAME/bin:/Users/USERNAME/ACLI:/usr/local/bin:$PATH
+if [ -f "/Users/rlavery/.config/fabric/fabric-bootstrap.inc" ]; then . "/Users/rlavery/.config/fabric/fabric-bootstrap.inc"; fi
+
+export LDFLAGS="-L/opt/homebrew/opt/net-snmp/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/net-snmp/include"
+export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:/Users/rlavery/.local/bin:/Users/rlavery/bin:/Users/rlavery/ACLI:/usr/local/bin:/opt/homebrew/opt/net-snmp/bin:/opt/homebrew/opt/net-snmp/sbin:$PATH
 
 # Path to your Oh My Zsh installation - commented out 20240819
 #export ZSH="$HOME/.oh-my-zsh"
@@ -99,6 +102,7 @@ alias grep='LC_CTYPE=POSIX grep --color=auto'
 alias egrep='LC_CTYPE=POSIX egrep --color=auto'
 alias mount='mount | column -t'
 alias hg='history | grep '
+alias sdf='ssh -i ~/Dropbox/ssh/id_ed25519 devrick0@otaku.freeshell.org'
 alias cdp='z $OLDPWD'
 alias cd='z'
 alias g='git'
@@ -123,21 +127,46 @@ alias rr="ranger"
 alias card-status="gpg --card-status"
 alias llama="ollama run llama3.1"
 alias zsrc="source ~/.zshrc"
-alias tn="tmux new -s $(pwd | sed 's/.*\///g')"
-alias yt="youtube-dl --restrict-filenames --no-overwrites --write-info-json --write-thumbnail --no-call-home --force-ipv4 --format 'best[height<=720]'"
-alias yt_max="youtube-dl --restrict-filenames --no-overwrites --write-info-json --write-thumbnail --no-call-home --force-ipv4"
-# these are 'tmuxinator' yml sessions under ~/.config/tmuxinator
 alias tmuxm="tmuxinator start monitoring"
 alias tmuxs="tmuxinator start scratchpad"
+alias yt="youtube-dl --restrict-filenames --no-overwrites --write-info-json --write-thumbnail --no-call-home --force-ipv4 --format 'best[height<=720]'"
+alias yt_max="youtube-dl --restrict-filenames --no-overwrites --write-info-json --write-thumbnail --no-call-home --force-ipv4"
+alias mosh="mosh --ssh='ssh -i ~/.ssh/id_ed25519' rlavery@22"
 
 # Mac setup for pomodoro timer
 alias work="timer 30m && terminal-notifier -message 'Pomodoro'\
         -title 'Work Timer is up! Take a Break 😊'\
+        #-appIcon '~/Pictures/pumpkin.png'\
         -sound Crystal"
         
 alias rest="timer 10m && terminal-notifier -message 'Pomodoro'\
         -title 'Break is over! Get back to work 😬'\
+        #-appIcon '~/Pictures/pumpkin.png'\
         -sound Crystal"
+
+#-----------------------------------------
+# TMUX
+#-----------------------------------------
+alias tmuxn="tmux new -s $(basename $(pwd))"   # Start a new Tmux session named after the current directory
+alias tmuxa="tmux attach -t $(basename $(pwd)) || tmux new -s $(basename $(pwd))"   # Reattach to an existing Tmux session or start a new one
+alias tmuxl="tmux ls"                         # List all Tmux sessions
+alias tmuxk="tmux kill-session -t"            # Kill a specific Tmux session
+alias tmuxkc="tmux kill-session -t $(basename $(pwd))"   # Kill the Tmux session named after the current directory
+alias tmuxr="tmux attach-session -d"          # Reconnect to the last Tmux session
+alias tmuxw="tmux list-windows"               # List active windows in the current session
+alias tmuxsv="tmux split-window -v"           # Quick way to split the window vertically
+alias tmuxsh="tmux split-window -h"           # Quick way to split the window horizontally
+alias tmuxrel="tmux source-file ~/.tmux.conf" # Reload Tmux config without restarting
+alias tmuxd="tmux detach"                     # Detach from the current session
+alias tmuxrn="tmux rename-session"            # Rename the current session with a new name
+
+#-----------------------------------------
+# Common SSH Sessions
+#-----------------------------------------
+alias ssh-ansible='ssh rlavery@ansible.lavery.lan'
+alias ssh-admin='ssh rlavery@admin.lavery.lan'
+alias ssh-pihole='ssh rlavery@pihole.lavery.lan'
+alias ssh-kali='ssh rlavery@kali-2024-bot01.lavery.lan'
 
 #-----------------------------------------
 # FUNCTIONS
@@ -205,10 +234,45 @@ function curl_debug() {
 	-o /dev/null -s "$1"
 }
 
-function genpasswd() {
-    local l=$1
-    [ "$l" == "" ] && l=20
-    tr -dc A-Za-z0-9_ < /dev/urandom | head -c ${l} | xargs
+genpasswd() {
+    # Set default length if not provided
+    local l=${1:-20}
+
+    # Ensure the minimum length is at least 4 (1 upper, 1 lower, 1 digit, 1 special)
+    if (( l < 4 )); then
+        echo "Password length must be at least 4."
+        return 1
+    fi
+
+    # Predefined character sets
+    local upper_chars="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    local lower_chars="abcdefghijklmnopqrstuvwxyz"
+    local digit_chars="0123456789"
+    local special_chars="!@#$%^&*()-_=+"
+    local all_chars="$upper_chars$lower_chars$digit_chars$special_chars"
+
+    # Start the password with one of each required type
+    local password=""
+    password+=$(echo "$upper_chars" | fold -w1 | shuf | head -c 1)
+    password+=$(echo "$lower_chars" | fold -w1 | shuf | head -c 1)
+    password+=$(echo "$digit_chars" | fold -w1 | shuf | head -c 1)
+    password+=$(echo "$special_chars" | fold -w1 | shuf | head -c 1)
+
+    # Fill the rest of the password with random characters from all sets
+    for ((i = 4; i < l; i++)); do
+        password+=$(echo "$all_chars" | fold -w1 | shuf | head -c 1)
+    done
+
+    # Shuffle the entire password to randomize the positions of the mandatory characters
+    password=$(echo "$password" | fold -w1 | shuf | tr -d '\n')
+
+    # Print the password to the terminal
+    echo "$password"
+    
+    # Copy the password to the clipboard
+    echo "$password" | pbcopy
+    
+    echo "Password copied to clipboard."
 }
 
 function mdc(){
@@ -284,7 +348,7 @@ function encrypt {  # list preferred id last
   gpg --armor --encrypt \
     --output ${output} \
     -r 0xFF00000000000000 \
-    -r EMAIL@ADDRESS.COM \
+    -r devrick88@gmail.com \
     "${1}" && echo "${1} -> ${output}" 
 }
 
@@ -390,7 +454,10 @@ alias gobusts3="gobuster s3 -w ~/src/SecLists/Dicsovery/DNS/subdomains-top5000.t
 #-----------------------------------------
 # Jira
 #-----------------------------------------
-alias jirahist="jira PROJECT list --history"
+alias jcsi="jira CSI list --history"
+alias jcs="jira CS list --history"
+alias jtdv="jira TDV list --history"
+
 
 zstyle ":completion:*" auto-description "specify %d"
 zstyle ":completion:*" cache-path "${HOME}/.zsh_cache"
@@ -412,4 +479,4 @@ eval "$(thefuck --alias)"
 eval "$(thefuck --alias fk)"
 #eval "$(starship init zsh)"
 
-source /Users/USERNAME/.config/op/plugins.sh
+source /Users/rlavery/.config/op/plugins.sh
